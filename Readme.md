@@ -1,6 +1,6 @@
 # Lighthouse Scanner
 
-![Stars Media IT GmbH Logo](https://starsmedia.com/wp-content/uploads/2023/06/starsmedia_logo_main.png)
+![Stars Media IT GmbH Logo](https://www.starsmedia.com/wp-content/uploads/2021/08/logo_black_blue.svg)
 
 A powerful and user-friendly tool for running Google Lighthouse audits on multiple URLs from a sitemap. Developed with assistance from Claude 3.5 Sonnet AI and proudly presented by [Stars Media IT GmbH](https://starsmedia.com/).
 

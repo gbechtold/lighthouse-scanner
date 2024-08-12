@@ -54,5 +54,33 @@
     "accessibility": 0.95,
     "bestPractices": 0.54,
     "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/news/stars-media-brand-colors/",
+    "performance": 0.26,
+    "accessibility": 0.91,
+    "bestPractices": 0.54,
+    "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/online-marketing/austrian-technical-e-commerce-monitor-2023/",
+    "performance": 0.25,
+    "accessibility": 0.92,
+    "bestPractices": 0.54,
+    "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/news/influencer-marketing-in-vorarlberg/",
+    "performance": 0.26,
+    "accessibility": 0.95,
+    "bestPractices": 0.54,
+    "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/news/statistik-muster-aufdecken/",
+    "performance": 0.26,
+    "accessibility": 0.95,
+    "bestPractices": 0.54,
+    "seo": 1
   }
 ]

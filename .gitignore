@@ -65,3 +65,6 @@ typings/
 
 # Windows system files
 Thumbs.db
+
+# Don't commit Lighthouse results
+lighthouse_results.json
