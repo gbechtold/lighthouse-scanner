@@ -198,5 +198,86 @@
     "accessibility": 0.99,
     "bestPractices": 1,
     "seo": 0.93
+  },
+  {
+    "url": "https://starsmedia.com/news/stars-media-brand-colors/",
+    "performance": 0.22,
+    "accessibility": 0.96,
+    "bestPractices": 1,
+    "seo": 0.93
+  },
+  {
+    "url": "https://starsmedia.com/news/google-page-speed-der-ultimative-leitfaden-zur-website-optimierung/",
+    "performance": 0.25,
+    "accessibility": 0.99,
+    "bestPractices": 1,
+    "seo": 0.93
+  },
+  {
+    "url": "https://starsmedia.com/news/lighthouse-scanner-dein-neuer-seo-helfer-fuer-blitzschnelle-google-pagespeed-optimierung/",
+    "performance": 0.27,
+    "accessibility": 0.99,
+    "bestPractices": 1,
+    "seo": 0.93
+  },
+  {
+    "url": "https://starsmedia.com/news/facebook-ads-kampage-exportieren/",
+    "performance": 0.24,
+    "accessibility": 0.99,
+    "bestPractices": 1,
+    "seo": 1
+  },
+  {
+    "url": "https://starsmedia.com/news/anleitung-anzeigen-fuer-x-advertising-optimieren-praezises-targeting-fuer-deinen-erfolg-%f0%9f%9a%80/",
+    "performance": 0.25,
+    "accessibility": 0.99,
+    "bestPractices": 1,
+    "seo": 0.93
+  },
+  {
+    "url": "https://starsmedia.com/news/was-ist-x-advertising-und-wie-kannst-du-es-nutzen/",
+    "error": "PROTOCOL_TIMEOUT"
+  },
+  {
+    "url": "https://starsmedia.com/news/der-ultimative-vergleich-von-wordpress-hosting-anbietern-die-besten-websites-fuer-2024/",
+    "performance": 0.22,
+    "accessibility": 0.99,
+    "bestPractices": 1,
+    "seo": 0.93
+  },
+  {
+    "url": "https://starsmedia.com/news/der-google-knowledge-graph-ein-leitfaden-zur-verbesserung-ihrer-online-praesenz/",
+    "performance": 0.18,
+    "accessibility": 0.99,
+    "bestPractices": 1,
+    "seo": 0.93
+  },
+  {
+    "url": "https://starsmedia.com/news/was-ist-ein-guter-roas/",
+    "performance": 0.27,
+    "accessibility": 0.99,
+    "bestPractices": 1,
+    "seo": 0.93
+  },
+  {
+    "url": "https://starsmedia.com/news/optimieren-sie-ihr-whatsapp-business-profil-fuer-den-erfolg/",
+    "performance": 0.33,
+    "accessibility": 0.99,
+    "bestPractices": 1,
+    "seo": 0.86
+  },
+  {
+    "url": "https://www.starsmedia.com/",
+    "performance": 0.34,
+    "accessibility": 0.96,
+    "bestPractices": 1,
+    "seo": 0.93
+  },
+  {
+    "url": "https://starsmedia.com/",
+    "performance": 0.23,
+    "accessibility": 0.96,
+    "bestPractices": 1,
+    "seo": 0.93
   }
 ]

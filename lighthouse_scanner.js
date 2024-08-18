@@ -177,6 +177,22 @@ export async function processUrl(url, results) {
   }
 }
 
+export async function getUserScanChoice(rl) {
+  const choice = await askQuestion(rl, "What do you want to analyse?\n\x1b[1m(1) A full site\x1b[0m (2) Full site using batches of Pages (3) A single url\n");
+  return choice.trim() || '1';  // Default to '1' if the input is empty
+}
+
+export async function getNumberOfPages(rl) {
+  const input = await askQuestion(rl, "Enter the number of pages per batch: ");
+  const number = parseInt(input.trim(), 10);
+  return isNaN(number) ? 10 : number;  // Default to 10 if input is invalid
+}
+
+export async function getSingleUrl(rl, baseUrl) {
+  const input = await askQuestion(rl, `Enter the specific URL to scan (default: ${baseUrl}): `);
+  return input.trim() || baseUrl;
+}
+
 export async function main() {
   console.log("🚀 Welcome to the Lighthouse Scanner! 🚀");
   console.log("This tool will analyze your website's performance, accessibility, best practices, and SEO.");
@@ -186,19 +202,44 @@ export async function main() {
 
   try {
     const inputUrl = await askQuestion(rl, "🌐 Please enter the URL of your website: ");
-    rl.close();
-
-    const sitemapUrl = await getSitemapUrl(inputUrl);
-    console.log(`📍 Using sitemap: ${sitemapUrl}`);
-
-    const urls = await getSitemapUrls(sitemapUrl);
+    const normalizedUrl = normalizeUrl(inputUrl);
     
-    if (urls.length === 0) {
-      console.log("❌ No URLs found in the sitemap. Exiting.");
+    const scanChoice = await getUserScanChoice(rl);
+    let urlsToScan = [];
+
+    switch (scanChoice) {
+      case '1':
+        // Full website scan
+        const sitemapUrl = await getSitemapUrl(normalizedUrl);
+        console.log(`📍 Using sitemap: ${sitemapUrl}`);
+        urlsToScan = await getSitemapUrls(sitemapUrl);
+        break;
+      case '2':
+        // Scan full site using batches of pages
+        const pageCount = await getNumberOfPages(rl);
+        const allUrls = await getSitemapUrls(await getSitemapUrl(normalizedUrl));
+        urlsToScan = allUrls;
+        console.log(`Will process in batches of ${pageCount} pages.`);
+        break;
+      case '3':
+        // Scan single URL
+        const singleUrl = await getSingleUrl(rl, normalizedUrl);
+        urlsToScan = [singleUrl];
+        break;
+      default:
+        console.log("Invalid choice. Defaulting to full website scan.");
+        const defaultSitemapUrl = await getSitemapUrl(normalizedUrl);
+        urlsToScan = await getSitemapUrls(defaultSitemapUrl);
+    }
+
+    rl.close();
+    
+    if (urlsToScan.length === 0) {
+      console.log("❌ No URLs found to scan. Exiting.");
       return;
     }
 
-    console.log(`🔍 Found ${urls.length} URLs in the sitemap.`);
+    console.log(`🔍 Found ${urlsToScan.length} URL(s) to scan.`);
     let results = [];
 
     if (fs.existsSync(OUTPUT_FILE)) {
@@ -207,7 +248,7 @@ export async function main() {
       console.log(`📂 Loaded ${results.length} existing results.`);
     }
 
-    for (const url of urls) {
+    for (const url of urlsToScan) {
       if (results.some(result => result.url === url)) {
         console.log(`⏭️  Skipping already processed URL: ${url}`);
         continue;
@@ -224,7 +265,6 @@ export async function main() {
     console.error("❌ An error occurred:", error.message);
   }
 }
-
 
 // Only run main if this file is being run directly
 // if (import.meta.url === `file://${process.argv[1]}`) {
