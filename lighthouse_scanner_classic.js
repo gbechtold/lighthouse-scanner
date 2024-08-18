@@ -1,4 +1,5 @@
-import fs from 'fs-extra';
+// Import statements remain the same
+import fs from 'fs';
 import axios from 'axios';
 import xml2js from 'xml2js';
 import puppeteer from 'puppeteer';
@@ -190,7 +191,11 @@ export async function main() {
   }
 }
 
+/*
 // Only run main if this file is being run directly
-// if (import.meta.url === `file://${process.argv[1]}`) {
+if (require.main === module) {
   main().catch(console.error);
-//}
+}
+*/
+
+

@@ -156,5 +156,40 @@
     "accessibility": 0.98,
     "bestPractices": 0.96,
     "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/news/lighthouse-scanner-dein-neuer-seo-helfer-fuer-blitzschnelle-google-pagespeed-optimierung/",
+    "performance": 0.4,
+    "accessibility": 0.98,
+    "bestPractices": 0.96,
+    "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/news/facebook-ads-kampage-exportieren/",
+    "performance": 0.39,
+    "accessibility": 0.98,
+    "bestPractices": 1,
+    "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/news/anleitung-anzeigen-fuer-x-advertising-optimieren-praezises-targeting-fuer-deinen-erfolg-%f0%9f%9a%80/",
+    "performance": 0.41,
+    "accessibility": 0.98,
+    "bestPractices": 0.96,
+    "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/news/was-ist-x-advertising-und-wie-kannst-du-es-nutzen/",
+    "performance": 0.37,
+    "accessibility": 0.98,
+    "bestPractices": 0.96,
+    "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/news/der-ultimative-vergleich-von-wordpress-hosting-anbietern-die-besten-websites-fuer-2024/",
+    "performance": 0.38,
+    "accessibility": 0.98,
+    "bestPractices": 0.96,
+    "seo": 1
   }
 ]
