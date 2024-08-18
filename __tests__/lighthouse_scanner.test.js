@@ -33,17 +33,8 @@ beforeAll(async () => {
   lighthouseScanner = await import('../lighthouse_scanner.js');
 });
 
-afterAll(async () => {
+afterAll(() => {
   axios.head = originalAxiosHead;
-  
-  // If lighthouse_scanner.js sets up any global resources, clean them up here
-  if (lighthouseScanner.cleanup && typeof lighthouseScanner.cleanup === 'function') {
-    await lighthouseScanner.cleanup();
-  }
-  
-  // Clear all mocks
-  jest.clearAllMocks();
-  jest.restoreAllMocks();
 });
 
 describe('Lighthouse Scanner', () => {
@@ -54,6 +45,24 @@ describe('Lighthouse Scanner', () => {
 
   afterEach(() => {
     axios.head = originalAxiosHead;
+  });
+
+  describe('normalizeUrl', () => {
+    test('should add https:// if protocol is missing', () => {
+      expect(lighthouseScanner.normalizeUrl('example.com')).toBe('https://example.com/');
+    });
+
+    test('should remove www. from the URL', () => {
+      expect(lighthouseScanner.normalizeUrl('https://www.example.com')).toBe('https://example.com/');
+    });
+
+    test('should handle URLs with http://', () => {
+      expect(lighthouseScanner.normalizeUrl('http://example.com')).toBe('http://example.com/');
+    });
+
+    test('should throw an error for invalid URLs', () => {
+      expect(() => lighthouseScanner.normalizeUrl('not a url')).toThrow('Invalid URL provided');
+    });
   });
 
   describe('getSitemapUrl', () => {
@@ -67,22 +76,43 @@ describe('Lighthouse Scanner', () => {
       const inputUrl = 'https://example.com';
       const expectedSitemapUrl = 'https://example.com/sitemap.xml';
       
-      axios.head.mockResolvedValue({});
+      axios.head.mockResolvedValueOnce({});
 
       const result = await lighthouseScanner.getSitemapUrl(inputUrl);
       expect(result).toBe(expectedSitemapUrl);
       expect(axios.head).toHaveBeenCalledWith(expectedSitemapUrl);
     });
 
+    test('should check multiple possible sitemap URLs', async () => {
+      const inputUrl = 'https://example.com';
+      const expectedSitemapUrls = [
+        'https://example.com/sitemap.xml',
+        'https://example.com/sitemap_index.xml',
+        'https://example.com/sitemap',
+        'https://example.com/sitemap.php',
+      ];
+      
+      axios.head.mockRejectedValueOnce(new Error('Not found'))
+               .mockRejectedValueOnce(new Error('Not found'))
+               .mockResolvedValueOnce({});
+
+      const result = await lighthouseScanner.getSitemapUrl(inputUrl);
+      expect(result).toBe(expectedSitemapUrls[2]);
+      expect(axios.head).toHaveBeenCalledTimes(3);
+      expectedSitemapUrls.slice(0, 3).forEach(url => {
+        expect(axios.head).toHaveBeenCalledWith(url);
+      });
+    });
+
     test('should throw an error if sitemap is not found', async () => {
       const inputUrl = 'https://example.com';
-      const expectedSitemapUrl = 'https://example.com/sitemap.xml';
       
       axios.head.mockRejectedValue(new Error('Not found'));
 
-      await expect(lighthouseScanner.getSitemapUrl(inputUrl)).rejects.toThrow(`Sitemap not found at ${expectedSitemapUrl}`);
+      await expect(lighthouseScanner.getSitemapUrl(inputUrl))
+        .rejects.toThrow('Sitemap not found for https://example.com/');
     });
   });
 
-  // Add more describe blocks here for other functions in lighthouse_scanner.js
+  // Add more tests for other functions as needed
 });

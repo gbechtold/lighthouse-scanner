@@ -23,29 +23,64 @@ export function askQuestion(rl, query) {
   return new Promise(resolve => rl.question(query, resolve));
 }
 
-export async function getSitemapUrl(inputUrl) {
-  if (inputUrl.endsWith('sitemap.xml')) {
-    return inputUrl;
+export function normalizeUrl(inputUrl) {
+  let url = inputUrl.trim().toLowerCase();
+
+  // Add protocol if missing
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = 'https://' + url;
   }
-  
-  const url = new URL(inputUrl);
-  const sitemapUrl = `${url.origin}/sitemap.xml`;
-  
+
   try {
-    await axios.head(sitemapUrl);
-    return sitemapUrl;
+    const parsedUrl = new URL(url);
+    
+    // Remove 'www.' if present
+    if (parsedUrl.hostname.startsWith('www.')) {
+      parsedUrl.hostname = parsedUrl.hostname.slice(4);
+    }
+
+    return parsedUrl.toString();
   } catch (error) {
-    throw new Error(`Sitemap not found at ${sitemapUrl}`);
+    throw new Error('Invalid URL provided');
   }
 }
 
+export async function getSitemapUrl(inputUrl) {
+  const normalizedUrl = normalizeUrl(inputUrl);
+  
+  if (normalizedUrl.endsWith('sitemap.xml')) {
+    return normalizedUrl;
+  }
+  
+  const url = new URL(normalizedUrl);
+  const possibleSitemaps = [
+    `${url.origin}/sitemap.xml`,
+    `${url.origin}/sitemap_index.xml`,
+    `${url.origin}/sitemap`,
+    `${url.origin}/sitemap.php`,
+  ];
+
+  for (const sitemapUrl of possibleSitemaps) {
+    try {
+      await axios.head(sitemapUrl);
+      return sitemapUrl;
+    } catch (error) {
+      // If not found, continue to the next possible sitemap URL
+      continue;
+    }
+  }
+
+  throw new Error(`Sitemap not found for ${normalizedUrl}`);
+}
+
 export async function getSitemapUrls(sitemapUrl) {
-  const response = await axios.get(sitemapUrl);
+  const normalizedSitemapUrl = normalizeUrl(sitemapUrl);
+  const response = await axios.get(normalizedSitemapUrl);
   const parser = new xml2js.Parser();
   const result = await parser.parseStringPromise(response.data);
 
   if (result.urlset && result.urlset.url) {
-    return result.urlset.url.map(url => url.loc[0]);
+    return result.urlset.url.map(url => normalizeUrl(url.loc[0]));
   } else if (result.sitemapindex && result.sitemapindex.sitemap) {
     const firstSitemapUrl = result.sitemapindex.sitemap[0].loc[0];
     return getSitemapUrls(firstSitemapUrl);
@@ -150,7 +185,7 @@ export async function main() {
   const rl = createReadlineInterface();
 
   try {
-    const inputUrl = await askQuestion(rl, "🌐 Please enter the URL of your website or sitemap: ");
+    const inputUrl = await askQuestion(rl, "🌐 Please enter the URL of your website: ");
     rl.close();
 
     const sitemapUrl = await getSitemapUrl(inputUrl);
@@ -189,6 +224,7 @@ export async function main() {
     console.error("❌ An error occurred:", error.message);
   }
 }
+
 
 // Only run main if this file is being run directly
 // if (import.meta.url === `file://${process.argv[1]}`) {
