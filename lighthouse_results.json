@@ -191,5 +191,12 @@
     "accessibility": 0.98,
     "bestPractices": 0.96,
     "seo": 1
+  },
+  {
+    "url": "https://www.starsmedia.com/news/der-google-knowledge-graph-ein-leitfaden-zur-verbesserung-ihrer-online-praesenz/",
+    "performance": 0.3,
+    "accessibility": 0.99,
+    "bestPractices": 1,
+    "seo": 0.93
   }
 ]
