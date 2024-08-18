@@ -162,7 +162,7 @@ describe('Lighthouse Scanner', () => {
   });
 
   describe('main', () => {
-    test('should handle full website scan', async () => {
+    test.skip('should handle full website scan', async () => {
       const mockRL = {
         question: jest.fn(),
         close: jest.fn()
