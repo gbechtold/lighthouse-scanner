@@ -68,3 +68,9 @@ Thumbs.db
 
 # Don't commit Lighthouse results
 lighthouse_results.json
+
+# Dev tools
+overview.txt
+
+# Output
+lighthouse_results.json
