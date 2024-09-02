@@ -74,3 +74,6 @@ overview.txt
 
 # Output
 lighthouse_results.json
+
+# Env
+.env
