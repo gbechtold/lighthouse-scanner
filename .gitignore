@@ -71,3 +71,6 @@ lighthouse_results.json
 
 # Dev tools
 overview.txt
+
+# Output
+lighthouse_results.json
